@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# STM32Cube MX
+Drivers/
+Inc/
+MDK-ARM/
+.mxproject
+mx.scratch
