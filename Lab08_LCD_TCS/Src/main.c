@@ -94,6 +94,7 @@ int main(void)
 
 	char pos[50];
 	uint16_t posX, posY;
+	uint16_t color;
 	
   /* USER CODE END Init */
 
@@ -144,6 +145,8 @@ int main(void)
 	LCD_SetBackColor(Yellow);
 	LCD_SetTextColor(Blue);
 	*/
+	
+	LCD_Clear(White);
 
   /* USER CODE END 2 */
 
@@ -165,14 +168,26 @@ int main(void)
 	HAL_UART_Transmit(&huart2, (uint8_t*)usart_clock, strlen(usart_clock), 100);
 	*/
 
-	/* Lab 6-3
 	posX = TCS_Read_X();
 	posY = TCS_Read_Y();
 	sprintf(pos, "X = %-6d Y = %-6d\r\n", posX, posY);
 	while(__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC) == RESET) {}
 	HAL_UART_Transmit(&huart2, (uint8_t*)pos, strlen(pos), 100);
-	HAL_Delay(300);
-	*/
+
+	if (posX!=0 && posY!=0){
+		if (posX<=160 && posY<=120){
+			color = Yellow;
+		} else if (posX>160 && posY<=120){
+			color = Red;
+		} else if (posX>160 && posY>120){
+			color = Blue;
+		} else if (posX<=160 && posY>120){
+			color = Magenta;
+		}
+		LCD_Clear(color);
+	}
+	HAL_Delay(100);
+
   }
   /* USER CODE END 3 */
 
